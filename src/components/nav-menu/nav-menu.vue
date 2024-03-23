@@ -15,6 +15,8 @@
         <el-sub-menu :index="item.id + ''">
           <template #title>
             <!-- <el-icon><Monitor /></el-icon> -->
+            <!-- 如上是 Elment 图标的插入语法的修改 -->
+            <!-- 因此内部可以使用动态组件进行图标渲染 -->
             <el-icon><component :is="item.icon.split('el-icon-')[1]"></component></el-icon>
             <span>{{ item.name }}</span>
           </template>
