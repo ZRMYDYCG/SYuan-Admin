@@ -1,7 +1,7 @@
 <template>
-  <div class="dashboard"></div>
+  <div class="user"></div>
 </template>
 
-<script setup lang="ts" name="main"></script>
+<script setup lang="ts" name="user"></script>
 
 <style scoped lang="less"></style>
