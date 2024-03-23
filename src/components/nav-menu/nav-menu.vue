@@ -2,13 +2,14 @@
   <div class="nav-menu">
     <div class="logo">
       <img class="img" src="@/assets/img/logo.svg" alt="logo" />
-      <span class="title">弘源管理系统</span>
+      <span v-show="!isFold" class="title">弘源管理系统</span>
     </div>
     <el-menu
       default-active="1-2"
       text-color="#b7bdc3"
       active-text-color="#fff"
       background-color="#001529"
+      :collapse="isFold"
     >
       <template v-for="item in userMenus" :key="item.id">
         <!-- 1.系统总览 -->
@@ -31,6 +32,13 @@
 
 <script setup lang="ts" name="nav-menu">
 import useLoginStore from '@/store/login/login'
+// 接收属性
+defineProps({
+  isFold: {
+    type: Boolean,
+    default: false
+  }
+})
 
 // 1.获取菜单数据
 const loginStore = useLoginStore()

@@ -1,12 +1,12 @@
 <template>
   <div class="main">
     <el-container class="main-content">
-      <el-aside width="210px">
-        <nav-menu />
+      <el-aside :width="isCollapse ? '60px' : '210px'">
+        <nav-menu :is-fold="isCollapse" />
       </el-aside>
       <el-container>
         <el-header height="48px">
-          <nav-header />
+          <nav-header @fold-change="handleFoldChange" />
         </el-header>
         <el-main>Main</el-main>
       </el-container>
@@ -15,11 +15,17 @@
 </template>
 
 <script setup lang="ts" name="main">
+import { ref } from 'vue'
 import NavMenu from '@/components/nav-menu/nav-menu.vue'
 import useLoginStore from '@/store/login/login'
-
 const loginStore = useLoginStore()
 loginStore.loadLocalDataAction()
+
+// 处理 main-header 中的折叠变化
+const isCollapse = ref(false)
+const handleFoldChange = (value: boolean) => {
+  isCollapse.value = value
+}
 </script>
 
 <style scoped lang="less">
