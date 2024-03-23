@@ -16,7 +16,6 @@
 
 <script setup lang="ts" name="main">
 import { ref } from 'vue'
-import NavMenu from '@/components/nav-menu/nav-menu.vue'
 import useLoginStore from '@/store/login/login'
 const loginStore = useLoginStore()
 loginStore.loadLocalDataAction()

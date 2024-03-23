@@ -14,7 +14,7 @@
 
 <script setup lang="ts" name="nav-header">
 import { ref } from 'vue'
-import HeaderInfo from './c-cpns/header-info.vue'
+// import HeaderInfo from './c-cpns/header-info.vue'
 // 组件内部自定义事件
 const emit = defineEmits(['foldChange'])
 

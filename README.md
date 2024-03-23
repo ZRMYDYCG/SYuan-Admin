@@ -1,46 +1,50 @@
-# hy_vue3_ts_cms
+## 思源后台管理系统
 
-This template should help get you started developing with Vue 3 in Vite.
+这个模板应该可以帮助你开始使用 Vue 3 在 Vite 中进行开发。
 
-## Recommended IDE Setup
+## 推荐的 IDE 设置
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+VSCode + Volar（禁用 Vetur）+ TypeScript Vue Plugin (Volar)。
 
-## Type Support for `.vue` Imports in TS
+## TypeScript 中对 .vue 导入的类型支持
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
+TypeScript 默认无法处理 .vue 导入的类型信息，因此我们用 vue-tsc 替换 tsc CLI 进行类型检查。在编辑器中，我们需要 TypeScript Vue Plugin (Volar) 来让 TypeScript 语言服务了解 .vue 类型。
 
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
+如果独立的 TypeScript 插件对你来说不够快，Volar 还实现了一个更高性能的 Take Over Mode。你可以通过以下步骤启用它：
 
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
+1. 禁用内置的 TypeScript 扩展
+    1.1 从 VSCode 的命令面板中运行 Extensions: Show Built-in Extensions
+    1.2 找到 TypeScript and JavaScript Language Features，右键选择 Disable (Workspace)
+2. 通过运行 Developer: Reload Window 从命令面板重新加载 VSCode 窗口。
 
-## Customize configuration
+## 自定义配置
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+查看 Vite 配置参考。
 
-## Project Setup
+## 项目设置
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+## 开发时编译和热重载
 
 ```sh
 npm run dev
 ```
 
-### Type-Check, Compile and Minify for Production
+## 生产环境类型检查、编译和压缩
 
 ```sh
 npm run build
 ```
 
-### Lint with [ESLint](https://eslint.org/)
+## 使用 ESLint 进行代码检查
 
 ```sh
 npm run lint
 ```
+
+## css 之 :deep() 使用细节
+
+基于 vue 的 scoped 实现原理, 如果使用第三方组件或者自己强封装的业务组件或拓展性高的基础组件, 想要在父组件中进行子组件样式以定义类样式的覆盖修改, 子组件最外部的定义类可以直接选中, 因为其带有了与 app 相同的属性, 但是该组件内部的类, 是不可以选中修改的, 此时 :deep() 的作用就来了, 可以进行样式的穿透

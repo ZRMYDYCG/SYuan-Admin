@@ -24,7 +24,7 @@
         </span>
         <template #dropdown>
           <el-dropdown-menu>
-            <el-dropdown-item>
+            <el-dropdown-item @click="handleExitClick">
               <el-icon><CircleCloseFilled /></el-icon>
               退出系统
             </el-dropdown-item>
@@ -43,7 +43,17 @@
   </div>
 </template>
 
-<script setup lang="ts" name="header-info"></script>
+<script setup lang="ts" name="header-info">
+import { localCache } from '@/utils/cache'
+import { LOGIN_TOKEN } from '@/global/constants'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+
+const handleExitClick = () => {
+  localCache.deleteCache(LOGIN_TOKEN)
+  router.push('/login')
+}
+</script>
 
 <style scoped lang="less">
 .header-info {
@@ -93,6 +103,7 @@
   }
 }
 
+// 由于该弹出层已经不在 app 里面了 :deep() 语法失效 找不到类名
 .info {
   :global(.el-dropdown-menu__item) {
     line-height: 36px !important;
