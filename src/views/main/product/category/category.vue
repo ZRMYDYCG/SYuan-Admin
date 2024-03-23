@@ -1,7 +1,7 @@
 <template>
-  <div class="product"></div>
+  <div class="category"></div>
 </template>
 
-<script setup lang="ts" name="product"></script>
+<script setup lang="ts" name="category"></script>
 
 <style scoped lang="less"></style>
