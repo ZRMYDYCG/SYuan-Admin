@@ -22,7 +22,9 @@
             <span>{{ item.name }}</span>
           </template>
           <template v-for="subitem in item.children" :key="subitem.id">
-            <el-menu-item :index="subitem.id + ''">{{ subitem.name }}</el-menu-item>
+            <el-menu-item :index="subitem.id + ''" @click="handleItemClick(subitem)">{{
+              subitem.name
+            }}</el-menu-item>
           </template>
         </el-sub-menu>
       </template>
@@ -31,7 +33,9 @@
 </template>
 
 <script setup lang="ts" name="nav-menu">
+import { useRouter } from 'vue-router'
 import useLoginStore from '@/store/login/login'
+const router = useRouter()
 // 接收属性
 defineProps({
   isFold: {
@@ -43,6 +47,10 @@ defineProps({
 // 1.获取菜单数据
 const loginStore = useLoginStore()
 const userMenus = loginStore.userMenus
+
+const handleItemClick = (subitem: any) => {
+  router.push(subitem.url)
+}
 </script>
 
 <style scoped lang="less">
