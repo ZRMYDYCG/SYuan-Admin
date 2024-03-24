@@ -2,10 +2,10 @@
   <div class="nav-menu">
     <div class="logo">
       <img class="img" src="@/assets/img/logo.svg" alt="logo" />
-      <span v-show="!isFold" class="title">弘源管理系统</span>
+      <span v-show="!isFold" class="title">思源后台管理系统</span>
     </div>
     <el-menu
-      default-active="1-2"
+      :default-active="defaultActive"
       text-color="#b7bdc3"
       active-text-color="#fff"
       background-color="#001529"
@@ -33,8 +33,10 @@
 </template>
 
 <script setup lang="ts" name="nav-menu">
-import { useRouter } from 'vue-router'
+import { ref } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import useLoginStore from '@/store/login/login'
+import { mapPathToMenu } from '@/utils/map-menus'
 const router = useRouter()
 // 接收属性
 defineProps({
@@ -44,13 +46,18 @@ defineProps({
   }
 })
 
-// 1.获取菜单数据
+// 1. 获取菜单数据
 const loginStore = useLoginStore()
 const userMenus = loginStore.userMenus
 
 const handleItemClick = (subitem: any) => {
   router.push(subitem.url)
 }
+
+// 2. 默认选中菜单
+const route = useRoute()
+const pathMenu = mapPathToMenu(route.path, userMenus)
+const defaultActive = ref(pathMenu.id + '')
 </script>
 
 <style scoped lang="less">
