@@ -31,7 +31,16 @@ export function mapMenusToRoutes(userMenus: any[]) {
   for (const menu of userMenus) {
     for (const submenu of menu.children) {
       const route = localRoutes.find((item) => item.path === submenu.url)
+      // 给 route 顶层菜单增加重定向功能
       if (route) {
+        if (
+          !currentRoutes.find((item) => {
+            item.path === submenu.url
+          })
+        ) {
+          currentRoutes.push({ path: menu.url, redirect: route.path })
+        }
+        // 二级菜单对应路由
         currentRoutes.push(route)
       }
       if (!firstMenu && route) {
@@ -47,6 +56,7 @@ export function mapMenusToRoutes(userMenus: any[]) {
  * @desc 根据当前路由路径去激活需要显示的菜单
  * @param path 需要匹配的路径
  * @param userMenus 所有的菜单
+ * @return { submenu } 默认激活的菜单项
  */
 export function mapPathToMenu(path: string, userMenus: any[]) {
   for (const menu of userMenus) {
@@ -56,4 +66,29 @@ export function mapPathToMenu(path: string, userMenus: any[]) {
       }
     }
   }
+}
+
+/**
+ * @desc 面包屑导航体内容的动态展示
+ * @param path 当前的路径
+ * @param userMenus 所有的菜单
+ * @return { breadcrumbs } 动态展示的面包屑内容
+ */
+interface IBreadcrumbs {
+  name: string
+  path: string
+}
+export function mapPathToBreadCrumbs(path: string, userMenus: any[]) {
+  // 定义面包屑
+  const breadcrumbs: IBreadcrumbs[] = []
+  // 遍历获取面包屑层级
+  for (const menu of userMenus) {
+    for (const submenu of menu.children) {
+      if (submenu.url === path) {
+        breadcrumbs.push({ name: menu.name, path: menu.url })
+        breadcrumbs.push({ name: submenu.name, path: submenu.url })
+      }
+    }
+  }
+  return breadcrumbs
 }
