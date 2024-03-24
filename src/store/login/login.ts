@@ -7,7 +7,7 @@ import { defineStore } from 'pinia'
 interface ILoginState {
   token: string
   userInfo: any
-  userMenus: any[]
+  userMenus: any
 }
 
 const useLoginStore = defineStore('login', {
@@ -29,7 +29,7 @@ const useLoginStore = defineStore('login', {
       // 3.获取用户信息
       const userRes = await getUserById(id)
       this.userInfo = userRes.data
-      localCache.setCache('useInfo', this.userInfo)
+      localCache.setCache('userInfo', this.userInfo)
 
       // 4.根据role的id获取菜单
       const roleId = this.userInfo.role.id
@@ -46,9 +46,23 @@ const useLoginStore = defineStore('login', {
     },
 
     loadLocalDataAction() {
-      this.token = localCache.getCache('token')
-      this.userInfo = localCache.getCache('userInfo')
-      this.userMenus = localCache.getCache('userMenus')
+      console.log(1)
+      // 1. 用户进行刷新后默认加载数据
+      const token = localCache.getCache('token')
+      const userInfo = localCache.getCache('userInfo')
+      const userMenus = localCache.getCache('userMenus')
+      console.log(token)
+      console.log(userInfo)
+      console.log(userMenus)
+      if (token && userInfo && userMenus) {
+        console.log(2)
+        this.token = token
+        this.userInfo = userInfo
+        this.userMenus = userMenus
+        // 2. 动态添加路由
+        const routes = mapMenusToRoutes(userMenus)
+        routes.forEach((route) => router.addRoute('main', route))
+      }
     }
   }
 })

@@ -25,7 +25,7 @@ export function mapMenusToRoutes(userMenus: any[]) {
   // 加载本地路由
   const localRoutes = loadLocalRoutes()
 
-  // 根据当前厚点返回的角色菜单进行匹配
+  // 根据当前用户返回的角色菜单进行匹配
   const currentRoutes: RouteRecordRaw[] = []
   for (const menu of userMenus) {
     for (const submenu of menu.children) {
