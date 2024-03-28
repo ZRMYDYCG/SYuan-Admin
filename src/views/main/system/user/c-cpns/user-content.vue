@@ -2,7 +2,7 @@
   <div class="user-content">
     <div class="header">
       <h3 class="title">用户列表</h3>
-      <el-button type="primary">新建用户</el-button>
+      <el-button type="primary" @click="handleNewUserClick">新建用户</el-button>
     </div>
     <div class="table">
       <el-table :data="usersList" border style="width: 100%">
@@ -75,6 +75,8 @@ import { ref } from 'vue'
 import useSystemStore from '@/store/main/system/system'
 import { formatUTC } from '@/utils/format'
 import { storeToRefs } from 'pinia'
+// 定义事件
+const emit = defineEmits(['newClick'])
 
 // combination-获取列表数据
 const currentPage = ref(1)
@@ -94,6 +96,11 @@ const handleCurrentChange = () => {
 // 编辑、删除数据操作
 function handleClickBtnClick(id: number) {
   systemStore.deleteUserByIdAction(id)
+}
+
+// 新建用户
+function handleNewUserClick() {
+  emit('newClick')
 }
 
 // combination-发送网络请求
