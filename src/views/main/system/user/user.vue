@@ -1,7 +1,7 @@
 <template>
   <div class="user">
     <user-search @query-click="handleQueryClick" @reset-click="handleResetClick" />
-    <user-content ref="contentRef" @new-click="handleNewClick" />
+    <user-content ref="contentRef" @new-click="handleNewClick" @edit-click="handleEditClick" />
     <user-model ref="modelRef" />
   </div>
 </template>
@@ -24,6 +24,10 @@ const handleQueryClick = (formData: any) => {
 
 const handleResetClick = () => {
   contentRef.value?.fetchUserListData()
+}
+
+const handleEditClick = (itemData: any) => {
+  modelRef.value?.setModalVisible(false, itemData)
 }
 
 const modelRef = ref<InstanceType<typeof UserModel>>()

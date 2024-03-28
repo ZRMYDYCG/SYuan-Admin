@@ -41,7 +41,14 @@
         </el-table-column>
         <el-table-column align="center" label="操作" width="180px">
           <template #default="slotProps">
-            <el-button size="small" icon="Edit" text type="primary">编辑</el-button>
+            <el-button
+              size="small"
+              icon="Edit"
+              text
+              type="primary"
+              @click="handleEditBtnClick(slotProps.row)"
+              >编辑</el-button
+            >
             <el-button
               size="small"
               icon="Delete"
@@ -76,7 +83,7 @@ import useSystemStore from '@/store/main/system/system'
 import { formatUTC } from '@/utils/format'
 import { storeToRefs } from 'pinia'
 // 定义事件
-const emit = defineEmits(['newClick'])
+const emit = defineEmits(['newClick', 'editClick'])
 
 // combination-获取列表数据
 const currentPage = ref(1)
@@ -101,6 +108,11 @@ function handleClickBtnClick(id: number) {
 // 新建用户
 function handleNewUserClick() {
   emit('newClick')
+}
+
+// 编辑用户
+function handleEditBtnClick(itemData: any) {
+  emit('editClick', itemData)
 }
 
 // combination-发送网络请求
