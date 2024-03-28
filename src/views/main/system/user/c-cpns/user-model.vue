@@ -1,6 +1,11 @@
 <template>
   <div class="user-model">
-    <el-dialog v-model="dialogVisible" title="新建用户" width="500" center>
+    <el-dialog
+      v-model="dialogVisible"
+      :title="isNewRef ? '新建用户' : '编辑用户'"
+      width="500"
+      center
+    >
       <div class="form">
         <el-form :model="formData" label-width="100px">
           <el-form-item label="用户名" prop="name">
