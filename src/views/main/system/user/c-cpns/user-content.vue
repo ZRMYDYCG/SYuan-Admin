@@ -40,8 +40,17 @@
           </template>
         </el-table-column>
         <el-table-column align="center" label="操作" width="180px">
-          <el-button size="small" icon="Edit" text type="primary">编辑</el-button>
-          <el-button size="small" icon="Delete" text type="danger">删除</el-button>
+          <template #default="slotProps">
+            <el-button size="small" icon="Edit" text type="primary">编辑</el-button>
+            <el-button
+              size="small"
+              icon="Delete"
+              text
+              type="danger"
+              @click="handleClickBtnClick(slotProps.row.id)"
+              >删除</el-button
+            >
+          </template>
         </el-table-column>
       </el-table>
     </div>
@@ -80,6 +89,11 @@ const handleSizeChange = () => {
 }
 const handleCurrentChange = () => {
   fetchUserListData()
+}
+
+// 编辑、删除数据操作
+function handleClickBtnClick(id: number) {
+  systemStore.deleteUserByIdAction(id)
 }
 
 // combination-发送网络请求
