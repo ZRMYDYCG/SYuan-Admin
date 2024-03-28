@@ -67,14 +67,14 @@ import useSystemStore from '@/store/main/system/system'
 import { formatUTC } from '@/utils/format'
 import { storeToRefs } from 'pinia'
 
-// combination-a 获取列表数据
+// combination-获取列表数据
 const currentPage = ref(1)
 const pageSize = ref(10)
 const systemStore = useSystemStore()
 fetchUserListData()
 const { usersList, usersTotalCount } = storeToRefs(systemStore)
 
-// combination-b 分页器相关逻辑
+// combination-分页器相关逻辑
 const handleSizeChange = () => {
   fetchUserListData()
 }
@@ -83,13 +83,18 @@ const handleCurrentChange = () => {
 }
 
 // combination-发送网络请求
-function fetchUserListData() {
+function fetchUserListData(formData: any = {}) {
   // 1. 获取 offset / size
   const size = pageSize.value
   const offset = (currentPage.value - 1) * size
+  // 2. 合并请求参数
   const info = { size, offset }
-  systemStore.postUserListAction(info)
+  const queryInfo = { ...info, ...formData }
+  systemStore.postUserListAction(queryInfo)
 }
+
+// 暴露方法、数据
+defineExpose({ fetchUserListData })
 </script>
 
 <style scoped lang="less">

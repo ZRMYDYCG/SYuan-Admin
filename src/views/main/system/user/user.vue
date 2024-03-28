@@ -1,13 +1,28 @@
 <template>
   <div class="user">
-    <UserSearch />
-    <UserContent />
+    <user-search @query-click="handleQueryClick" @reset-click="handleResetClick" />
+    <user-content ref="contentRef" />
   </div>
 </template>
 
 <script setup lang="ts" name="user">
+// 依赖、包、函数、工具
 import UserSearch from './c-cpns/user-search.vue'
 import UserContent from './c-cpns/user-content.vue'
+import { ref } from 'vue'
+
+// combination-操作子组件 user-content
+const contentRef = ref<InstanceType<typeof UserContent>>()
+const handleQueryClick = (formData: any) => {
+  console.log(formData)
+  console.log(contentRef.value)
+  // 非空断言 !
+  contentRef.value!.fetchUserListData(formData)
+}
+
+const handleResetClick = () => {
+  contentRef.value?.fetchUserListData()
+}
 </script>
 
 <style scoped lang="less"></style>

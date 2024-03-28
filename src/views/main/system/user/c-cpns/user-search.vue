@@ -55,23 +55,30 @@
 import { reactive, ref } from 'vue'
 import type { ElForm } from 'element-plus'
 
+// 定义表单数据
 const searchForm = reactive({
   name: '',
   realname: '',
   cellphone: '',
   enable: 1,
-  createAt: []
+  createAt: ''
 })
 
-// 重置操作
+// 定义自定义事件
+const emit = defineEmits(['queryClick', 'resetClick'])
+
+// combination-a 重置操作
 const formRef = ref<InstanceType<typeof ElForm>>()
 function handleResetClick() {
+  // 清空表单数据
   formRef.value?.resetFields()
+  // 重新调用渲染接口
+  emit('resetClick')
 }
 
-// 查询
+// combination-b 查询操作
 function handleQueryClick() {
-  console.log('11')
+  emit('queryClick', searchForm)
 }
 </script>
 
