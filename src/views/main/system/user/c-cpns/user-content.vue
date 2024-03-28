@@ -45,18 +45,42 @@
         </el-table-column>
       </el-table>
     </div>
-    <div class="pagination"></div>
+    <div class="footer">
+      <el-pagination
+        v-model:current-page="currentPage"
+        v-model:page-size="pageSize"
+        :page-sizes="[10, 20, 30]"
+        small="small"
+        layout="total, sizes, prev, pager, next, jumper"
+        :total="400"
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+      />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts" name="user-content">
+// 依赖、包、工具、函数
+import { ref } from 'vue'
 import useSystemStore from '@/store/main/system/system'
 import { formatUTC } from '@/utils/format'
 import { storeToRefs } from 'pinia'
+
+// combination-a 获取列表数据
 const systemStore = useSystemStore()
 systemStore.postUserListAction()
-
 const { usersList } = storeToRefs(systemStore)
+
+// combination-b 分页器相关逻辑
+const currentPage = ref(1)
+const pageSize = ref(10)
+const handleSizeChange = () => {
+  console.log(1)
+}
+const handleCurrentChange = () => {
+  console.log(2)
+}
 </script>
 
 <style scoped lang="less">
