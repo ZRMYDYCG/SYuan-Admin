@@ -1,7 +1,28 @@
 <template>
   <div class="user-model">
     <el-dialog v-model="dialogVisible" title="新建用户" width="500" center>
-      <span> It should be noted that the content will not be aligned in center by default </span>
+      <div class="form">
+        <el-form :model="formData" label-width="100px">
+          <el-form-item label="用户名" prop="name">
+            <el-input v-model="formData.name" placeholder="请输入用户名" />
+          </el-form-item>
+          <el-form-item label="真实姓名" prop="realname">
+            <el-input v-model="formData.realname" placeholder="请输入真实姓名" />
+          </el-form-item>
+          <el-form-item label="密码" prop="password">
+            <el-input v-model="formData.password" show-password placeholder="请输入密码" />
+          </el-form-item>
+          <el-form-item label="手机号码" prop="cellphone">
+            <el-input v-model="formData.cellphone" placeholder="请输入手机号码" />
+          </el-form-item>
+          <el-form-item label="选择角色" prop="roleId">
+            <el-input v-model="formData.roleId" placeholder="请选择角色" />
+          </el-form-item>
+          <el-form-item label="选择部门" prop="departmentId">
+            <el-input v-model="formData.departmentId" placeholder="请选择部门" />
+          </el-form-item>
+        </el-form>
+      </div>
       <template #footer>
         <div class="dialog-footer">
           <el-button @click="dialogVisible = false">取消</el-button>
@@ -13,15 +34,29 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, reactive } from 'vue'
 const dialogVisible = ref(true)
 
 // 设置 dialogVisible 方法
 function setModalVisible() {
   dialogVisible.value = true
 }
+
+// 表单数据
+const formData = reactive({
+  name: '',
+  realname: '',
+  password: '',
+  cellphone: '',
+  roleId: '',
+  departmentId: ''
+})
 // 暴露属性、方法
 defineExpose({ setModalVisible })
 </script>
 
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.form {
+  padding: 0 20px;
+}
+</style>
