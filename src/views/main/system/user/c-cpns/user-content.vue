@@ -52,7 +52,7 @@
         :page-sizes="[10, 20, 30]"
         small="small"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="400"
+        :total="usersTotalCount"
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
       />
@@ -68,18 +68,27 @@ import { formatUTC } from '@/utils/format'
 import { storeToRefs } from 'pinia'
 
 // combination-a 获取列表数据
-const systemStore = useSystemStore()
-systemStore.postUserListAction()
-const { usersList } = storeToRefs(systemStore)
-
-// combination-b 分页器相关逻辑
 const currentPage = ref(1)
 const pageSize = ref(10)
+const systemStore = useSystemStore()
+fetchUserListData()
+const { usersList, usersTotalCount } = storeToRefs(systemStore)
+
+// combination-b 分页器相关逻辑
 const handleSizeChange = () => {
-  console.log(1)
+  fetchUserListData()
 }
 const handleCurrentChange = () => {
-  console.log(2)
+  fetchUserListData()
+}
+
+// combination-发送网络请求
+function fetchUserListData() {
+  // 1. 获取 offset / size
+  const size = pageSize.value
+  const offset = (currentPage.value - 1) * size
+  const info = { size, offset }
+  systemStore.postUserListAction(info)
 }
 </script>
 
@@ -101,5 +110,11 @@ const handleCurrentChange = () => {
   :deep(.el-table__cell) {
     padding: 20px 0;
   }
+}
+
+.footer {
+  display: flex;
+  justify-content: end;
+  margin-top: 20px;
 }
 </style>
