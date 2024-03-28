@@ -3,6 +3,7 @@ import { accountLogin, getRoleMenus, getUserById } from '@/service/login/login'
 import { localCache } from '@/utils/cache'
 import { mapMenusToRoutes } from '@/utils/map-menus'
 import { defineStore } from 'pinia'
+import useMainStore from '../main/main'
 
 interface ILoginState {
   token: string
@@ -37,11 +38,16 @@ const useLoginStore = defineStore('login', {
       this.userMenus = menuRes.data
       localCache.setCache('userMenus', this.userMenus)
 
-      // 动态添加路由
+      // 5. 动态添加路由
       const routes = mapMenusToRoutes(this.userMenus)
       // 在 main 路由的子路由里面动态添加子路由
       routes.forEach((route) => router.addRoute('main', route))
-      // 5. 跳转到首页
+
+      // 6. 请求所有的 roles / departments 数据
+      const mainStore = useMainStore()
+      mainStore.fetchRntireDataAction()
+
+      // 7. 跳转到首页
       router.push('/main')
     },
 
@@ -62,6 +68,10 @@ const useLoginStore = defineStore('login', {
         // 2. 动态添加路由
         const routes = mapMenusToRoutes(userMenus)
         routes.forEach((route) => router.addRoute('main', route))
+
+        // 用户刷新、重新请求
+        const mainStore = useMainStore()
+        mainStore.fetchRntireDataAction()
       }
     }
   }
