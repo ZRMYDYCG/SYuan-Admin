@@ -56,7 +56,6 @@ const handleFoldChange = (value: boolean) => {
 
   .el-main {
     color: #333;
-    text-align: center;
     background-color: #f0f2f5;
   }
 }
