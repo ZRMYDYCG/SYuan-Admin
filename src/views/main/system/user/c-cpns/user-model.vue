@@ -34,7 +34,7 @@
       <template #footer>
         <div class="dialog-footer">
           <el-button @click="dialogVisible = false">取消</el-button>
-          <el-button type="primary" @click="dialogVisible = false">确定</el-button>
+          <el-button type="primary" @click="handleConfirm">确定</el-button>
         </div>
       </template>
     </el-dialog>
@@ -43,6 +43,7 @@
 
 <script setup lang="ts">
 import useMainStore from '@/store/main/main'
+import useSystemStore from '@/store/main/system/system'
 import { storeToRefs } from 'pinia'
 import { ref, reactive } from 'vue'
 
@@ -65,6 +66,13 @@ const formData = reactive({
 // 获取下拉选择列表的数据
 const mainStore = useMainStore()
 const { entireDepartments, entireRoles } = storeToRefs(mainStore)
+
+// 创建用户
+const handleConfirm = () => {
+  dialogVisible.value = false
+  const systemStore = useSystemStore()
+  systemStore.newUserDataAction(formData)
+}
 
 // 暴露属性、方法
 defineExpose({ setModalVisible })

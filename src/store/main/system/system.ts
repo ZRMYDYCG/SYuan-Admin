@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { postUsersListData, deleteUserById } from '@/service/main/system/system'
+import { postUsersListData, deleteUserById, newUserData } from '@/service/main/system/system'
 import type { ISystemState } from './type'
 
 const useSystemStore = defineStore('system', {
@@ -18,6 +18,12 @@ const useSystemStore = defineStore('system', {
       const deleteResult = await deleteUserById(id)
       console.log(deleteResult)
       // 重新请求最新数据
+      this.postUserListAction({ offset: 0, size: 10 })
+    },
+    async newUserDataAction(userInfo: any) {
+      // 1. 创建新用户
+      await newUserData(userInfo)
+      // 2. 重新发起请求
       this.postUserListAction({ offset: 0, size: 10 })
     }
   }
