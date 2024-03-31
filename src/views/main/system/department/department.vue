@@ -6,7 +6,7 @@
       @reset-click="handleResetClick"
     />
     <page-content
-      :content-config="conentConfig"
+      :content-config="contentConfig"
       ref="contentRef"
       @new-click="handleNewClick"
       @edit-click="handleEditClick"
@@ -22,9 +22,11 @@ import PageContent from '@/components/page-content/page-content.vue'
 // import PageContent from './c-cpns/page-content.vue'
 import PageModel from '@/components/page-model/page-model.vue'
 import searchConfig from './config/search.config'
-import conentConfig from './config/content.config'
+import contentConfig from './config/content.config'
 import modalConfig from './config/modal.config'
 import useMainStore from '@/store/main/main'
+import usePageContent from '@/hooks/usePageContent'
+import usePageModal from '@/hooks/userPageModal'
 
 // 对 modalConfig 操作
 const modalConfigRef = computed(() => {
@@ -41,22 +43,10 @@ const modalConfigRef = computed(() => {
 })
 
 // 点击search, content 的操作
-const contentRef = ref<InstanceType<typeof PageContent>>()
-function handleQueryClick(queryInfo: any) {
-  contentRef.value?.fetchPageListData(queryInfo)
-}
-function handleResetClick() {
-  contentRef.value?.fetchPageListData()
-}
+const { contentRef, handleQueryClick, handleResetClick } = usePageContent()
 
 // 点击content, model 的操作
-const modelRef = ref<InstanceType<typeof PageModel>>()
-function handleNewClick() {
-  modelRef.value?.setModalVisible()
-}
-function handleEditClick(itemData: any) {
-  modelRef.value?.setModalVisible(false, itemData)
-}
+const { modelRef, handleEditClick, handleNewClick } = usePageModal()
 </script>
 
 <style scoped lang="less"></style>
